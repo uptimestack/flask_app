@@ -8,5 +8,5 @@ jobs:
   update-content:
     uses: uptimestack/workflow-yml/.github/workflows/deploy.yml@main
     with:
-      message: "Hello from the caller repo!"
+      message: "Goodbye from the caller repo!"
 
