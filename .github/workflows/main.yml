@@ -1,22 +1,12 @@
-name: Test Self-Hosted Runner
+name: Trigger Reusable Workflow
 
 on:
   push:
     branches: [main]
 
 jobs:
-  update-html:
-    runs-on: self-hosted  # Match this to your runner's actual label(s)
-
-    steps:
-      - name: Echo runner info
-        run: |
-          echo "Running on self-hosted runner: $RUNNER_NAME"
-          echo "Workflow triggered successfully"
-
-      - name: Update index.html
-        run: |
-          echo "Updating HTML file..."
-          sed -i 's|<h1>.*</h1>|<h1>Hello from self-hosted runner!</h1>|' /home/subhan.asad/flask_app/templates/index.html
-
-
+  update-content:
+    echo "Connecting with workflow repo"
+    uses: uptimestack/workflow-yml/.github/workflows/deploy.yml@main
+    with:
+      message: "Hello from the caller repo!"
