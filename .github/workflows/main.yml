@@ -1,0 +1,12 @@
+name: Trigger Reusable Workflow
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-content:
+    uses: uptimestack/workflow-yml/.github/workflows/deploy.yml@main
+    with:
+      message: "Hello from the caller repo!"
+
