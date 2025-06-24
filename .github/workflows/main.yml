@@ -8,4 +8,4 @@ jobs:
   update-content:
     uses: uptimestack/workflow-yml/.github/workflows/deploy.yml@main
     with:
-      message: "Hello from the caller repo!"
+      message: "Hello from flask repo, it is changed"
