@@ -6,7 +6,6 @@ on:
 
 jobs:
   update-content:
-    echo "Connecting with workflow repo"
     uses: uptimestack/workflow-yml/.github/workflows/deploy.yml@main
     with:
       message: "Hello from the caller repo!"
