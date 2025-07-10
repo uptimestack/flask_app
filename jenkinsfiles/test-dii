@@ -1,0 +1,29 @@
+def runFlyway(project_key,build_env,flyway_task,db_script_path,NAME,VERSION,GIT_SHORT_COMMIT) {
+    def secrets = [[path: 'kv/flyway-license', secretValues: [[vaultKey: 'licenseKey']]], [path: "kv/database/$project_key/$build_env", secretValues: [[vaultKey: 'url'], [vaultKey: 'username'], [vaultKey: 'password']]]]
+    def conf = "/opt/flyway-9.1.6/conf/flyway.conf"
+    def flyway_home = "/opt/flyway-9.1.6"
+    def location = "filesystem:$db_script_path"
+    stage('Flyway-Migration'){
+        stash includes: '**', name:'build_source'
+        node('FlyWay'){
+            cleanWs()
+            unstash 'build_source'
+            gitlabCommitStatus('Flyway-Migration'){
+                withEnv(["PATH+flyway=$flyway_home"]){
+                    withVault([vaultSecrets: secrets]){
+                        sh "flyway -enterprise -locations=$location -configFiles=$conf -licenseKey=${licenseKey} -url=${url} -user=${username} -password=${password} $flyway_task"
+                    }
+                }
+            }
+            if ("$build_env" == "sit" || "$build_env" == "sit2" || "$build_env" == "sit3"){
+                stage('upload_db_scripts'){
+                    zip dir: "$db_script_path", zipFile: "${VERSION}-${GIT_SHORT_COMMIT}.zip"
+                    uploadArtifactory{
+                        pattern = "${VERSION}-${GIT_SHORT_COMMIT}.zip"
+                        target = "dts-db-scripts/$NAME/"
+                    }
+                }
+            }
+        }
+    }
+}
