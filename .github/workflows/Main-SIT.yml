@@ -1,0 +1,17 @@
+name: Main-SIT
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      "release*"
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        shell: bash
+        run: |
+          echo "Hello there"
+          echo "This is an SIT yml"
