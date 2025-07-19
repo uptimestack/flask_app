@@ -1,0 +1,17 @@
+name: Main-PRE-SIT
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      "pre-sit*"
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        shell: bash
+        run: |
+          echo "Hello there"
+          echo "Hello from PRE-SIT"
