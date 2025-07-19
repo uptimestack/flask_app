@@ -1,0 +1,16 @@
+name: Main-DEV
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        shell: bash
+        run: |
+          echo "Hello there"
