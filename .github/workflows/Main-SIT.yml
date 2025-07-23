@@ -1,10 +1,16 @@
 name: Main-SIT
 
 on:
-  workflow_dispatch: {}
-  push:
-    tags:
-      "release*"
+  workflow_dispatch: 
+    inputs:
+      VERSION:
+        description: 'App Version'
+        required: true
+        type: string
+      COMMIT_NUMBER:
+        description: 'Commit Hash'
+        required: true
+        type: string
 
 jobs:
   update-content:
@@ -14,4 +20,5 @@ jobs:
         shell: bash
         run: |
           echo "Hello there"
-          echo "This is an SIT yml"
+          echo "VERSION is: "${{ inputs.VERSION }}""
+          echo "COMMIT_NUMBER is: "${{ inputs.COMMIT_NUMBER }}""
