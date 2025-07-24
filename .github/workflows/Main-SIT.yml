@@ -22,3 +22,5 @@ jobs:
           echo "Hello there"
           echo "VERSION is: "${{ inputs.VERSION }}""
           echo "COMMIT_NUMBER is: "${{ inputs.COMMIT_NUMBER }}""
+          echo "Organization name: "${{ github.repository_owner }}""
+          echo "Repo name: "${{ github.event.repository.name }}""
